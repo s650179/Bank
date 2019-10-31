@@ -40,4 +40,8 @@ public class BankAccount {
     public double getSavings() {
         return this.savings;
     }
+
+    public String toString() {
+        return "Bank Account [Name: " + this.name + ", Account Number: " + this.accountNumber + ", Savings: " + this.savings;
+    }
 }
