@@ -12,7 +12,7 @@ public class BankAccount {
 
     public BankAccount (String name, double savings) {
         this.name = name;
-        this.accountNumber = String.format("%6d", nextAccountNumber);
+        this.accountNumber = String.format("%06d", nextAccountNumber);
         this.savings = savings;
         nextAccountNumber += 1;
     }

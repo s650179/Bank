@@ -21,6 +21,50 @@ public class Ledger {
         }
     }
 
+    public void deleteCustomer(BankAccount account) {
+        customers.remove(account);
+    }
+
+    public void sortCustomersSavings() {
+        for (int i = 0; i < customers.size()-1; i++) {
+            for (int j = 0; j < customers.size()-1; j++) {
+                if (customers.get(j).getSavings() > customers.get(j+1).getSavings()) {
+                    BankAccount temp = customers.get(j);
+                    customers.set(j, customers.get(j+1));
+                    customers.set(j+1, temp);
+                }
+            }
+        }
+    }
+
+    public void sortCustomersSavings(boolean reverses) {
+        for (int i = 0; i < customers.size()-1; i++) {
+            for (int j = 0; j < customers.size()-1; j++) {
+                if (customers.get(j).getSavings() > customers.get(j+1).getSavings() && !reverses) {
+                    BankAccount temp = customers.get(j);
+                    customers.set(j, customers.get(j+1));
+                    customers.set(j+1, temp);
+                }else if (customers.get(j).getSavings() < customers.get(j+1).getSavings() && reverses) {
+                    BankAccount temp = customers.get(j);
+                    customers.set(j, customers.get(j+1));
+                    customers.set(j+1, temp);
+                }
+            }
+        }
+    }
+
+    public void sortCustomersName() {
+        for (int i = 0; i < customers.size()-1; i++) {
+            for (int j = 0; j < customers.size()-1; j++) {
+                if (customers.get(j).getAccountNumber().compareTo(customers.get(j+1).getAccountNumber()) >= 0) {
+                    BankAccount temp = customers.get(j);
+                    customers.set(j, customers.get(j+1));
+                    customers.set(j+1, temp);
+                }
+            }
+        }
+    }
+
     public void printTotalBalance() {
         double total = 0;
         for (BankAccount customer:customers) {
