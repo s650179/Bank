@@ -42,6 +42,6 @@ public class BankAccount {
     }
 
     public String toString() {
-        return "Bank Account [Name: " + this.name + ", Account Number: " + this.accountNumber + ", Savings: " + this.savings;
+        return "Bank Account [Name: " + this.name + ", Account Number: " + this.accountNumber + ", Savings: " + this.savings + "]";
     }
 }
