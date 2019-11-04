@@ -112,11 +112,23 @@ public class Ledger {
     public ArrayList<BankAccount> searchCustomers(String name) {
        ArrayList<BankAccount> results = new ArrayList<BankAccount>();
        for (BankAccount current : customers) {
-           if (current.getName().equals(name)) {
+           if (current.getName().contains(name)) {
                results.add(current);
            }
        }
        return results;
+    }
+
+    public ArrayList<BankAccount> savingsRange(double lower, double upper, boolean inclusive){
+        ArrayList<BankAccount> results = new ArrayList<BankAccount>();
+        for (BankAccount current:customers) {
+            if (current.getSavings() >= lower && current.getSavings() <= upper && inclusive) {
+                results.add(current);
+            } else if (current.getSavings() > lower && current.getSavings() < upper && !inclusive) {
+                results.add(current);
+            }
+        }
+        return results;
     }
 
     public void printTotalBalance() {
