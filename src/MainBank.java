@@ -7,7 +7,19 @@ import java.awt.event.ActionListener;
 public class MainBank {
     private static JFrame mainFrame = new JFrame("Bank App");
     private JPanel loginPane = new JPanel();
-    private JButton button1;
+    private JPasswordField passwordField1;
+    private JButton a7Button;
+    private JButton a8Button;
+    private JButton a9Button;
+    private JButton a4Button;
+    private JButton a5Button;
+    private JButton a6Button;
+    private JButton a1Button;
+    private JButton a2Button;
+    private JButton a3Button1;
+    private JButton xButton;
+    private JButton a0Button;
+    private JButton button14;
     private static GridBagConstraints c = new GridBagConstraints();
 
     public MainBank() {
