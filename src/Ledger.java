@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 
 public class Ledger {
@@ -16,9 +17,12 @@ public class Ledger {
         for (BankAccount customer:customers) {
             if (number.equals(customer.getAccountNumber())) {
                 customers.remove(index);
+                System.out.println("Customer successfully deleted!");
+                return;
             }
             index++;
         }
+        System.out.println("There was an error, the account could not be deleted.");
     }
 
     public void deleteCustomer(BankAccount account) {
@@ -96,11 +100,11 @@ public class Ledger {
     public void sortAccountNumber(boolean reverses) {
         for (int i = 0; i < customers.size()-1; i++) {
             for (int j = 0; j < customers.size()-1; j++) {
-                if (customers.get(j).getAccountNumber().compareTo(customers.get(j+1).getAccountNumber()) <= 0 && !reverses) {
+                if (customers.get(j).getAccountNumber().compareTo(customers.get(j+1).getAccountNumber()) >= 0 && !reverses) {
                     BankAccount temp = customers.get(j);
                     customers.set(j, customers.get(j+1));
                     customers.set(j+1, temp);
-                } else if (customers.get(j).getAccountNumber().compareTo(customers.get(j+1).getAccountNumber()) > 0 && reverses) {
+                } else if (customers.get(j).getAccountNumber().compareTo(customers.get(j+1).getAccountNumber()) < 0 && reverses) {
                     BankAccount temp = customers.get(j);
                     customers.set(j, customers.get(j+1));
                     customers.set(j+1, temp);
@@ -112,7 +116,7 @@ public class Ledger {
     public ArrayList<BankAccount> searchCustomers(String name) {
        ArrayList<BankAccount> results = new ArrayList<BankAccount>();
        for (BankAccount current : customers) {
-           if (current.getName().contains(name)) {
+           if (current.getName().toLowerCase().contains(name.toLowerCase())) {
                results.add(current);
            }
        }
@@ -131,6 +135,46 @@ public class Ledger {
         return results;
     }
 
+    public void save() {
+        try {
+            FileWriter fw = new FileWriter("SavedAccounts.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            for (BankAccount account : customers) {
+                bw.write(account.getName() + ", " + account.getAccountNumber() + ", " + account.getSavings() + "\n");
+                //System.out.println("Wrote one entry: " + account);
+            }
+
+            bw.close();
+            fw.close();
+        } catch(IOException e) {
+            System.out.println("There was an error saving the file and data could not be saved.");
+        }
+    }
+
+    public void read() {
+        ArrayList<BankAccount> temp = new ArrayList<BankAccount>();
+        try {
+            FileReader fr = new FileReader("SavedAccounts.txt");
+            BufferedReader br = new BufferedReader(fr);
+
+            String next = br.readLine();
+            while (next != null) {
+                String[] split = next.split( ", ", -1);
+                String name = split[0];
+                String number = split[1];
+                double savings = Double.valueOf(split[2]);
+                temp.add(new BankAccount(name, number, savings));
+                next = br.readLine();
+            }
+
+            customers = temp;
+
+        } catch(IOException e) {
+
+        }
+    }
+
     public void printTotalBalance() {
         double total = 0;
         for (BankAccount customer:customers) {
@@ -141,7 +185,9 @@ public class Ledger {
 
     public void printCustomers() {
         for (BankAccount customer:customers) {
-            System.out.println(customer);
+            System.out.println("--------------------------------------------------");
+            System.out.println("Name: " + customer.getName() + "\nAccount#: " + customer.getAccountNumber() + "\nSavings: " + customer.getSavings());
         }
+        System.out.println("--------------------------------------------------");
     }
 }
